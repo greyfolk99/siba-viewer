@@ -1,0 +1,73 @@
+{
+  "name": "siba-preview",
+  "displayName": "SIBA Preview",
+  "description": "Live preview for SIBA (Structured Ink for Building Archives) documents",
+  "version": "0.1.0",
+  "publisher": "hjseo",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "siba-preview.openPreview",
+        "title": "SIBA: Open Preview",
+        "icon": "$(open-preview)"
+      },
+      {
+        "command": "siba-preview.openPreviewToSide",
+        "title": "SIBA: Open Preview to the Side",
+        "icon": "$(open-preview)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "resourceLangId == markdown",
+          "command": "siba-preview.openPreviewToSide",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "SIBA Preview",
+      "properties": {
+        "siba-preview.lspPath": {
+          "type": "string",
+          "default": "siba-lsp",
+          "description": "Path to the siba-lsp executable"
+        },
+        "siba-preview.autoRefresh": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically refresh preview on document change"
+        },
+        "siba-preview.refreshDelay": {
+          "type": "number",
+          "default": 300,
+          "description": "Delay in milliseconds before refreshing preview after a change"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  }
+}
