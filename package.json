@@ -1,6 +1,6 @@
 {
-  "name": "siba-preview",
-  "displayName": "SIBA Preview",
+  "name": "siba-viewer",
+  "displayName": "SIBA Viewer",
   "description": "Live preview for SIBA (Structured Ink for Building Archives) documents",
   "version": "0.1.0",
   "publisher": "hjseo",
@@ -17,39 +17,44 @@
   "contributes": {
     "commands": [
       {
-        "command": "siba-preview.openPreview",
+        "command": "siba-viewer.openPreview",
         "title": "SIBA: Open Preview",
         "icon": "$(open-preview)"
       },
       {
-        "command": "siba-preview.openPreviewToSide",
+        "command": "siba-viewer.openPreviewToSide",
         "title": "SIBA: Open Preview to the Side",
         "icon": "$(open-preview)"
+      },
+      {
+        "command": "siba-viewer.openGraph",
+        "title": "SIBA: Open Graph View",
+        "icon": "$(type-hierarchy)"
       }
     ],
     "menus": {
       "editor/title": [
         {
           "when": "resourceLangId == markdown",
-          "command": "siba-preview.openPreviewToSide",
+          "command": "siba-viewer.openPreviewToSide",
           "group": "navigation"
         }
       ]
     },
     "configuration": {
-      "title": "SIBA Preview",
+      "title": "SIBA Viewer",
       "properties": {
-        "siba-preview.lspPath": {
+        "siba-viewer.lspPath": {
           "type": "string",
           "default": "siba-lsp",
           "description": "Path to the siba-lsp executable"
         },
-        "siba-preview.autoRefresh": {
+        "siba-viewer.autoRefresh": {
           "type": "boolean",
           "default": true,
           "description": "Automatically refresh preview on document change"
         },
-        "siba-preview.refreshDelay": {
+        "siba-viewer.refreshDelay": {
           "type": "number",
           "default": 300,
           "description": "Delay in milliseconds before refreshing preview after a change"

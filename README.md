@@ -1,38 +1,42 @@
-# siba-preview
+# siba-viewer
 
-VSCode extension for [SIBA](https://github.com/greyfolk99/siba). Live preview of rendered SIBA documents with real-time diagnostics.
+VSCode extension for [SIBA](https://github.com/greyfolk99/siba). Live preview, diagnostics, and interactive graph view.
 
 ## Prerequisites
 
-- [siba](https://github.com/greyfolk99/siba) CLI installed
+- [siba](https://github.com/greyfolk99/siba) CLI installed and in PATH
 - [siba-lsp](https://github.com/greyfolk99/siba-lsp) installed and in PATH
 
 ## Install
 
-From source:
-
 ```bash
-git clone https://github.com/greyfolk99/siba-preview.git
-cd siba-preview
+git clone https://github.com/greyfolk99/siba-viewer.git
+cd siba-viewer
 npm install
 npm run compile
 ```
-
-Then install in VSCode: `Extensions > ... > Install from VSIX` or symlink to `~/.vscode/extensions/`.
 
 ## Features
 
 ### Live Preview
 
-Open any `.md` file and run `SIBA: Open Preview to the Side`. The preview shows the rendered output with all directives processed, variables substituted, and control flow evaluated.
+Open any `.md` file and run `SIBA: Open Preview to the Side`. Shows rendered output with directives processed, variables substituted, control flow evaluated. Auto-refreshes on change.
 
-Auto-refreshes on document changes (configurable delay).
+### Graph View
+
+Run `SIBA: Open Graph View` to see an interactive force-directed graph of your workspace. Calls `siba graph --json` and renders with Canvas.
+
+- Circles = documents (blue)
+- Diamonds = templates (purple)
+- Solid blue edges = extends
+- Gray edges = document references
+- Dotted orange edges = variable references
+- Drag nodes to rearrange
+- Legend in top-right corner
 
 ### LSP Diagnostics
 
-The extension starts `siba-lsp` automatically, which provides:
-
-- Real-time error/warning diagnostics
+Real-time error/warning diagnostics via siba-lsp:
 - Template contract violations
 - Unresolved references
 - Type mismatches
@@ -42,37 +46,22 @@ The extension starts `siba-lsp` automatically, which provides:
 
 | Command | Description |
 |---------|-------------|
-| `SIBA: Open Preview` | Open preview in current tab |
-| `SIBA: Open Preview to the Side` | Open preview in split view |
+| `SIBA: Open Preview` | Preview in current tab |
+| `SIBA: Open Preview to the Side` | Preview in split view |
+| `SIBA: Open Graph View` | Interactive dependency graph |
 
 ### Configuration
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `siba-preview.lspPath` | `"siba-lsp"` | Path to siba-lsp binary |
-| `siba-preview.autoRefresh` | `true` | Auto-refresh preview on change |
-| `siba-preview.refreshDelay` | `300` | Delay (ms) before refresh |
-
-## Architecture
-
-```
-VSCode
-  ├── siba-preview extension
-  │     ├── LSP Client → siba-lsp (subprocess, stdio)
-  │     └── Webview Preview Panel
-  │           └── siba/render request → siba-lsp → siba CLI
-  │
-  siba-lsp (Go binary)
-  │     └── bridge → siba check --json / siba render --json
-  │
-  siba (Go binary)
-        └── parse → validate → render
-```
+| `siba-viewer.lspPath` | `"siba-lsp"` | Path to siba-lsp binary |
+| `siba-viewer.autoRefresh` | `true` | Auto-refresh preview on change |
+| `siba-viewer.refreshDelay` | `300` | Delay (ms) before refresh |
 
 ## Related Projects
 
 - [siba](https://github.com/greyfolk99/siba) — Core engine + CLI
-- [siba-lsp](https://github.com/greyfolk99/siba-lsp) — LSP server
+- [siba-lsp](https://github.com/greyfolk99/siba-lsp) — LSP + MCP server
 
 ## License
 
