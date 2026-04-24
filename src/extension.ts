@@ -181,13 +181,14 @@ function refreshGraph() {
   }
 
   try {
-    const output = execSync('siba graph --json', {
+    const output = execSync('siba tree --deps --json', {
       cwd: workspaceFolder,
       encoding: 'utf-8',
       timeout: 10000,
     });
 
-    const data: GraphData = JSON.parse(output);
+    const envelope = JSON.parse(output);
+    const data: GraphData = envelope.data;
     graphPanel.webview.html = renderGraph(data);
   } catch (err) {
     graphPanel.webview.html = renderError(
